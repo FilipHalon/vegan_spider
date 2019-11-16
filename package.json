@@ -1,0 +1,30 @@
+{
+  "name": "vegan_spider",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'This is a test.'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FilipHalon/vegan_spider.git"
+  },
+  "keywords": [
+    "'vegan",
+    "spider'",
+    "'vegan'",
+    "'spider'",
+    "'veganism'",
+    "'recipe'",
+    "'nutrition'",
+    "'food'",
+    "'cooking'"
+  ],
+  "author": "Swiatomysl Halon",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/FilipHalon/vegan_spider/issues"
+  },
+  "homepage": "https://github.com/FilipHalon/vegan_spider#readme"
+}

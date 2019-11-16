@@ -1,0 +1,17 @@
+header {
+    font-family: 'IM Fell English', serif;
+}
+
+nav {
+    border-bottom: solid hsl(69, 44%, 47%) 1px;
+}
+
+nav a {
+    color: hsl(69, 44%, 47%);
+}
+
+body {
+    margin-top: 58px;
+    font-family: 'Markazi Text', serif;
+    color: hsl(69, 44%, 47%);
+}
