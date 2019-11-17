@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
-from vegan_spider_app.views import IngredientDetails
+from vegan_spider_app.views import IngredientDetails, IndexPage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view()),
+    path('', IndexPage.as_view(), name='index'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    re_path(r'^(?P<user>.*)/password_change/', auth_views.PasswordChangeView.as_view(template_name="password_change.html")),
     re_path(r'^ingredients/$', IngredientDetails.as_view(), name='ingredients'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

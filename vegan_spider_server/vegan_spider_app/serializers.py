@@ -4,6 +4,8 @@ from vegan_spider_app.models import Ingredient
 
 
 class IngredientDetailsSerializer(serializers.ModelSerializer):
+    text = serializers.CharField(source='name')
+
     class Meta:
         model = Ingredient
-        fields = '__all__'
+        fields = ('id', 'text', 'photo')

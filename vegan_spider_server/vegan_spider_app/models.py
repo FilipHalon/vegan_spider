@@ -6,12 +6,12 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(blank=True, upload_to='profile_photos')
 
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(blank=True, upload_to='ingredients')
 
     def __str__(self):
         return self.name
@@ -19,7 +19,7 @@ class Ingredient(models.Model):
 
 class Recipe(models.Model):
     name = models.CharField(max_length=256)
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(blank=True, upload_to='recipes')
     desc = models.CharField(max_length=512)
     link = models.CharField(max_length=256)
     ingredients = models.ManyToManyField(Ingredient, through="RecipeIngredient")
