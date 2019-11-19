@@ -1,3 +1,9 @@
+body {
+    margin-top: 58px;
+    font-family: 'Markazi Text', serif;
+    color: hsl(69, 44%, 47%);
+}
+
 header {
     font-family: 'IM Fell English', serif;
 }
@@ -10,8 +16,10 @@ nav a {
     color: hsl(69, 44%, 47%);
 }
 
-body {
-    margin-top: 58px;
-    font-family: 'Markazi Text', serif;
-    color: hsl(69, 44%, 47%);
+#ingredient-search-form {
+    width: 100%;
+}
+
+#select2-ingredients {
+    width: 100%;
 }

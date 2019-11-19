@@ -35,16 +35,26 @@
             <h1 class="display-4">Witaj u wegańskiego pająka</h1>
             <p class="lead">Opowiedz, co masz w lodówce, a pająk zaplecie sieć pomysłów, co możesz przygotować z podnych produktów</p>
         </section>
-        <section class="product-input container">
+        <section class="ingredient input container">
             <h2>Podaj produkty, które masz</h2>
-            <form>
-                <select class="js-example-basic-single" name="state">
-                </select>
-                <button class="">Dodaj do listy</button>
-            </form>
+                <div id="ingredient-search-form">
+                    <select id="select2-ingredients" class="js-example-basic-multiple" name="states[]" multiple="multiple"></select>
+                    <button class="ingredient add">Dodaj do listy</button>
+                </div>
+        </section>
+        <section class="ingredient list container">
             <h3>Lista produktów</h3>
-            <ul></ul>
-            <hr>
+                <ul>
+                    <li>
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li>Miara</li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </li>
+                </ul>
         </section>
         <section class="recipes"></section>
     </main>
