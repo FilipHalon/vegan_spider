@@ -23,3 +23,7 @@ nav a {
 #select2-ingredients {
     width: 100%;
 }
+
+.hidden {
+    display: none;
+}

@@ -27,4 +27,4 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     re_path(r'^(?P<user>.*)/password_change/', auth_views.PasswordChangeView.as_view(template_name="password_change.html")),
     re_path(r'^ingredients/$', IngredientDetails.as_view(), name='ingredients'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -16,36 +16,66 @@ $(function() {
     const $select2Ingredients = $('#select2-ingredients');
 
     const addNewIngredientRow = function(id, name, photo) {
-        return $(`<ul>
-                    <input type="hidden" value="${id}">
-                    <li><img src="${photo}" alt="${name}"></li>
-                    <li>${name}</li>
-                    <li>
-                        <input name="quantity" type="number">
-                    </li>
-                    <li>
-                        <select name="unit">
-                            <option value="gram" selected>gram</option>
-                            <option value="kilogramow" selected>kilogramów</option>
-                            <option value="mililitrow">mililitrów</option>
-                            <option value="litrow">litrów</option>
-                            <option value="sztuk">sztuk</option>
-                        </select>
-                    </li>
-                    <li>
-                        <button class="ingredient delete">Usuń</button>
-                    </li>
-                </ul>`)
+        return $(`<li class="ingredient box">
+                        <ul>
+                            <li class="hidden">
+                                <input class="ingredient id" type="hidden" name="ingredient-id" value="${id}">
+                            </li>
+                            <li><img src="${photo}" alt="${name}"></li>
+                            <li>${name}</li>
+                            <li>
+                                <input name="quantity" type="number">
+                            </li>
+                            <li>
+                                <select name="unit">
+                                    <option value="gram" selected>gram</option>
+                                    <option value="kilogram">kilogramów</option>
+                                    <option value="millilitre">mililitrów</option>
+                                    <option value="litre">litrów</option>
+                                    <option value="number">sztuk</option>
+                                </select>
+                            </li>
+                            <li>
+                                <button class="ingredient delete">Usuń</button>
+                            </li>
+                        </ul>
+                    </li>`)
     };
 
-    let displayedIngredients;
+    const displayedIngredients = [];
+    const $ingredientListDisplay = $(".ingredient.list.display");
 
     $('.ingredient.add').on("click", () => {
         const choices = $select2Ingredients.select2('data');
-        console.log(choices);
         $select2Ingredients.val(null).trigger('change');
-
+        for (let ing of choices) {
+            if (!displayedIngredients.includes(ing.id)) {
+                displayedIngredients.push(ing.id);
+                $ingredientListDisplay.append(addNewIngredientRow(ing.id, ing.text, ing.photo))
+            }
+        }
     });
+
+    const $ingredientListForm = $(".ingredient.list.form");
+    const $recipeSearchBtn = $(".recipe.search");
+
+    $ingredientListForm.on("click", (e) => {
+        const $target = $(e.target);
+        if ($target.hasClass("delete")) {
+            e.preventDefault();
+            const ingredientBox = $target.closest('.ingredient.box');
+            const ingredientId = ingredientBox.find('.ingredient.id').val();
+            if (displayedIngredients.includes(ingredientId)) {
+                displayedIngredients.splice(displayedIngredients.indexOf(ingredientId), 1);
+            }
+            ingredientBox.remove();
+        }
+        else if ($target === $recipeSearchBtn) {
+            e.preventDefault();
+
+        }
+    });
+
 
     $select2Ingredients.select2({
         dropdownParent: $('#ingredient-search-form'),
