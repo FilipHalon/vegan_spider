@@ -57,12 +57,11 @@ $(function() {
     });
 
     const $ingredientListForm = $(".ingredient.list.form");
-    const $recipeSearchBtn = $(".recipe.search");
 
     $ingredientListForm.on("click", (e) => {
+        e.preventDefault();
         const $target = $(e.target);
         if ($target.hasClass("delete")) {
-            e.preventDefault();
             const ingredientBox = $target.closest('.ingredient.box');
             const ingredientId = ingredientBox.find('.ingredient.id').val();
             if (displayedIngredients.includes(ingredientId)) {
@@ -70,9 +69,9 @@ $(function() {
             }
             ingredientBox.remove();
         }
-        else if ($target === $recipeSearchBtn) {
-            e.preventDefault();
-
+        else if ($target.hasClass("search")) {
+            const $ingredientList = $ingredientListForm.serialize();
+            console.log($ingredientList);
         }
     });
 

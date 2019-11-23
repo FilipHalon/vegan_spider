@@ -19,12 +19,15 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-from vegan_spider_app.views import IngredientDetails, IndexPage
+from vegan_spider_app.views import IngredientDetails, IndexPage, RecipeIngredients, UserLogin, RecipeDetails
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexPage.as_view(), name='index'),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    re_path(r'^(?P<user>.*)/password_change/', auth_views.PasswordChangeView.as_view(template_name="password_change.html")),
+    path('login/', UserLogin.as_view(), name='login'),
+    re_path(r'^(?P<user>.*)/password_change/',
+            auth_views.PasswordChangeView.as_view(template_name="password_change.html")),
     re_path(r'^ingredients/$', IngredientDetails.as_view(), name='ingredients'),
+    re_path(r'^recipe_ingredients/$', RecipeIngredients.as_view(), name="recipe-ingredients"),
+    re_path(r'^recipe_details/$', RecipeDetails.as_view(), name="recipe-ingredients"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
