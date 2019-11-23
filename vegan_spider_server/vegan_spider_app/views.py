@@ -1,6 +1,7 @@
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters
 from vegan_spider_app.models import Ingredient, RecipeIngredient, Recipe
 from vegan_spider_app.serializers import IngredientDetailSerializer, RecipeIngredientSerializer, RecipeDetailSerializer
@@ -34,3 +35,5 @@ class RecipeIngredients(generics.ListAPIView):
 class RecipeDetails(generics.ListAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeDetailSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['ingredients']

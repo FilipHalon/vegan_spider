@@ -19,7 +19,7 @@ $(function() {
         return $(`<li class="ingredient box">
                         <ul>
                             <li class="hidden">
-                                <input class="ingredient id" type="hidden" name="ingredient-id" value="${id}">
+                                <input class="ingredient id" type="hidden" name="ingredients" value="${id}">
                             </li>
                             <li><img src="${photo}" alt="${name}"></li>
                             <li>${name}</li>
@@ -72,6 +72,9 @@ $(function() {
         else if ($target.hasClass("search")) {
             const $ingredientList = $ingredientListForm.serialize();
             console.log($ingredientList);
+            $ajax('http://127.0.0.1:8000/recipe_details/', 'GET', $ingredientList).done(resp => {
+                console.log(resp);
+            })
         }
     });
 
