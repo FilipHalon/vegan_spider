@@ -41,15 +41,21 @@ class RecipeDetails(generics.ListAPIView):
     filterset_fields = ['ingredients']
 
     def get_queryset(self):
-        queryset = super().get_queryset()
         queried_ingredients = self.request.query_params.getlist('ingredients')
+        queryset = super().get_queryset()
         queryset = queryset.annotate(ingredients_count=Count('ingredients', distinct=True))
-        if queried_ingredients is not None:
-            queryset = queryset.annotate(ingredients_in=Sum(
-                    Case(
-                        When(ingredients__in=queried_ingredients, then=1),
-                        output_field=CharField(),
-                    )
-                )
-            )
+        if queried_ingredients:
+            # queryset = queryset.annotate(ingredients_included=Sum(
+            #         Case(
+            #             When(ingredients__in=queried_ingredients, then=1),
+            #             output_field=CharField(),
+            #         )
+            #     )
+            # )
+            queryset = queryset.filter(ingredients__id__in=queried_ingredients).annotate(ingredients_included=Count(
+                'recipeingredient__ingredient', distinct=True
+            ))
+            # queryset = queryset.filter(recipeingredient__id__in=queried_ingredients).annotate(ingredients_included=Count(
+            #     'ingredients', distinct=True
+            # ))
         return queryset

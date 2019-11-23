@@ -24,7 +24,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
         # source='ingredients_count',
         read_only=True
     )
-    ingredients_in = serializers.IntegerField(
+    ingredients_included = serializers.IntegerField(
         read_only=True
     )
 
