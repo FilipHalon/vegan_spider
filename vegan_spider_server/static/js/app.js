@@ -56,7 +56,23 @@ $(function() {
         }
     });
 
+    const $recipeDisplayRow = function (name, photo, desc, url, match) {
+        return $(`<li>
+                    <ul>
+                        <li><img src="${photo}" alt="${name}"></li>
+                        <li><a href="${url}">${name}</a></li>
+                        <li>${desc}</li>
+                        <li><a href="${url}">Przejdź do strony</a></li>
+                        <li>
+                            <ul class="ingredient display"></ul>
+                        </li>
+                        <li>Dopasowanie: ${match}</li>
+                    </ul>
+                </li>`)
+    };
+
     const $ingredientListForm = $(".ingredient.list.form");
+    const $recipeDisplayList = $(".recipe.list.display");
 
     $ingredientListForm.on("click", (e) => {
         e.preventDefault();
@@ -73,7 +89,16 @@ $(function() {
             const $ingredientList = $ingredientListForm.serialize();
             console.log($ingredientList);
             $ajax('http://127.0.0.1:8000/recipe_details/', 'GET', $ingredientList).done(resp => {
-                console.log(resp);
+                resp.forEach(el => {
+                    // const recipe = JSON.parse(el);
+                    const recipe = el;
+                    const match = recipe.ingredients_included/recipe.ingredient_count;
+                    $recipeDisplayList.append($recipeDisplayRow(recipe.name, recipe.photo, recipe.desc, recipe.url, match));
+                    const $ingredientDisplayList = $(".ingredient.display");
+                    for (let ingredient of recipe.ingredients) {
+                        $ingredientDisplayList.append($(`<li>${ingredient.name}</li>`))
+                    }
+                });
             })
         }
     });
