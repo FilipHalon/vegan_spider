@@ -20,8 +20,16 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 class RecipeDetailSerializer(serializers.ModelSerializer):
     # ingredients = IngredientDetailSerializer(many=True)
+    ingredients_count = serializers.IntegerField(
+        # source='ingredients_count',
+        read_only=True
+    )
+    ingredients_in = serializers.IntegerField(
+        read_only=True
+    )
 
     class Meta:
         model = Recipe
         fields = '__all__'
+        # fields = ('name', 'photo', 'desc', 'link', 'ingredients', 'ingredients_count')
 

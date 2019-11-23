@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LoginView
+from django.db.models import Count, Sum, Case, When, Q, CharField
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
@@ -34,6 +35,21 @@ class RecipeIngredients(generics.ListAPIView):
 
 class RecipeDetails(generics.ListAPIView):
     queryset = Recipe.objects.all()
+    # queryset = Recipe.objects.annotate(ingredients_count=Count('ingredients'))
     serializer_class = RecipeDetailSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['ingredients']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queried_ingredients = self.request.query_params.getlist('ingredients')
+        queryset = queryset.annotate(ingredients_count=Count('ingredients', distinct=True))
+        if queried_ingredients is not None:
+            queryset = queryset.annotate(ingredients_in=Sum(
+                    Case(
+                        When(ingredients__in=queried_ingredients, then=1),
+                        output_field=CharField(),
+                    )
+                )
+            )
+        return queryset
