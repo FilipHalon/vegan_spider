@@ -52,10 +52,9 @@ class RecipeDetails(generics.ListAPIView):
             #         )
             #     )
             # )
-            queryset = queryset.filter(ingredients__id__in=queried_ingredients).annotate(ingredients_included=Count(
-                'recipeingredient__ingredient', distinct=True
-            ))
-            # queryset = queryset.filter(recipeingredient__id__in=queried_ingredients).annotate(ingredients_included=Count(
-            #     'ingredients', distinct=True
-            # ))
+            queryset = queryset.filter(ingredients__id__in=queried_ingredients).annotate(
+                ingredients_included=Count(
+                    'recipeingredient__ingredient', distinct=True
+                )
+            ).order_by()
         return queryset

@@ -19,9 +19,8 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeDetailSerializer(serializers.ModelSerializer):
-    # ingredients = IngredientDetailSerializer(many=True)
+    ingredients = IngredientDetailSerializer(many=True)
     ingredients_count = serializers.IntegerField(
-        # source='ingredients_count',
         read_only=True
     )
     ingredients_included = serializers.IntegerField(

@@ -15,8 +15,23 @@ $(function() {
 
     const $select2Ingredients = $('#select2-ingredients');
 
+    $select2Ingredients.select2({
+        dropdownParent: $('#ingredient-search-form'),
+        ajax: {
+            delay: 250,
+            url: 'http://127.0.0.1:8000/ingredients/',
+            dataType: 'json',
+            data: function(params) {
+                return {search: params.term}
+            },
+            processResults: function (data) {
+                return {results: data}
+            }
+        }
+    });
+
     const addNewIngredientRow = function(id, name, photo) {
-        return $(`<li class="ingredient box">
+        return $(`<li class="ingredient instance box">
                         <ul>
                             <li class="hidden">
                                 <input class="ingredient id" type="hidden" name="ingredients" value="${id}">
@@ -56,7 +71,7 @@ $(function() {
         }
     });
 
-    const $recipeDisplayRow = function (name, photo, desc, url, match) {
+    const $recipeDisplayRow = function (id, name, photo, desc, url, match) {
         return $(`<li>
                     <ul>
                         <li><img src="${photo}" alt="${name}"></li>
@@ -64,7 +79,7 @@ $(function() {
                         <li>${desc}</li>
                         <li><a href="${url}">Przejdź do strony</a></li>
                         <li>
-                            <ul class="ingredient display"></ul>
+                            <ul class="recipe ${id} ingredient list display"></ul>
                         </li>
                         <li>Dopasowanie: ${match}</li>
                     </ul>
@@ -87,35 +102,16 @@ $(function() {
         }
         else if ($target.hasClass("search")) {
             const $ingredientList = $ingredientListForm.serialize();
-            console.log($ingredientList);
             $ajax('http://127.0.0.1:8000/recipe_details/', 'GET', $ingredientList).done(resp => {
-                resp.forEach(el => {
-                    // const recipe = JSON.parse(el);
-                    const recipe = el;
-                    const match = recipe.ingredients_included/recipe.ingredient_count;
-                    $recipeDisplayList.append($recipeDisplayRow(recipe.name, recipe.photo, recipe.desc, recipe.url, match));
-                    const $ingredientDisplayList = $(".ingredient.display");
+                resp.forEach(recipe => {
+                    const match = Math.round(parseFloat(recipe.ingredients_included)/parseFloat(recipe.ingredients_count)*100)/100;
+                    $recipeDisplayList.append($recipeDisplayRow(recipe.id, recipe.name, recipe.photo, recipe.desc, recipe.url, match));
+                    const $ingredientDisplayList = $(`.recipe.${recipe.id}.ingredient.list.display`);
                     for (let ingredient of recipe.ingredients) {
-                        $ingredientDisplayList.append($(`<li>${ingredient.name}</li>`))
+                        $ingredientDisplayList.append($(`<li>${ingredient.text}</li>`))
                     }
                 });
             })
-        }
-    });
-
-
-    $select2Ingredients.select2({
-        dropdownParent: $('#ingredient-search-form'),
-        ajax: {
-            delay: 250,
-            url: 'http://127.0.0.1:8000/ingredients/',
-            dataType: 'json',
-            data: function(params) {
-                return {search: params.term}
-            },
-            processResults: function (data) {
-                return {results: data}
-            }
         }
     });
 });
