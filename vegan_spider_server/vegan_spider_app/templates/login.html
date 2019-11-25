@@ -9,7 +9,7 @@
 <body>
     <form method="POST">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_ul }}
         {% block button %}
             <button type="submit">Zaloguj się</button>
         {% endblock %}

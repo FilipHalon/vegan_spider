@@ -1,9 +1,7 @@
-{% load static %}
-
 <!DOCTYPE html>
-<html lang="pl-PL">
+<html lang="pl-Pl">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=IM+Fell+English|Markazi+Text:400,700&display=swap&subset=latin-ext">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -19,48 +17,35 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
     <script src="{% static 'js/app.js' %}"></script>
     <title>Witaj u wegańskiego pająka</title>
+    <title>Profil użytkownika</title>
 </head>
 <body>
     <header>
         <nav class="navbar fixed-top">
-            <a class="navbar-brand" href="#">Wegański pająk</a>
+            <a class="navbar-brand" href="#">Wegański pająk - strona główna</a>
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'new-user-create' %}">Zarejestruj się</a>
                 </li>
-{#                {% if user.is_authenticated %}#}
-{#                {% else %}#}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Zaloguj się</a>
-                    </li>
-{#                {% endif %}#}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Zaloguj się</a>
+                </li>
             </ul>
         </nav>
     </header>
     <main>
-        <section class="container jumbotron jumbotron-fluid align-content-center">
-            <h1 class="display-4">Witaj u wegańskiego pająka</h1>
-            <p class="lead">Opowiedz, co masz w lodówce, a pająk zaplecie sieć pomysłów, co możesz przygotować z podnych produktów</p>
+        <section class="detail list">
+
         </section>
         <section class="ingredient input container">
-            <h2>Podaj produkty, które masz</h2>
+            <h2>Dodaj produkty, które masz</h2>
                 <div id="ingredient-search-form">
                     <select id="select2-ingredients" class="js-example-basic-multiple" name="states[]" multiple="multiple"></select>
                     <button class="ingredient add">Dodaj do listy</button>
                 </div>
         </section>
-        <section class="ingredient list container">
-            <h2>Lista produktów</h2>
-            <form class="ingredient list form">
-                <ul class="ingredient list display">
-                </ul>
-                <button class="ingredient recipe search">Szukaj</button>
-            </form>
-        </section>
-        <section class="recipe list container">
-            <h2>Lista przepisów</h2>
-            <ul class="recipe list display">
-            </ul>
+        <section class="ingredient list">
+
         </section>
     </main>
 </body>

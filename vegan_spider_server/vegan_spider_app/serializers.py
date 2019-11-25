@@ -1,6 +1,14 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from vegan_spider_app.models import Ingredient, RecipeIngredient, Recipe
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
 
 
 class IngredientDetailSerializer(serializers.ModelSerializer):

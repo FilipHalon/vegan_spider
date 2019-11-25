@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo = models.ImageField(blank=True, upload_to='profile_photos')
+    ingredients = models.ManyToManyField('Ingredient', through="UserIngredient")
 
 
 class Ingredient(models.Model):
@@ -31,7 +32,7 @@ class Recipe(models.Model):
 class Unit(models.Model):
     name = models.CharField(max_length=128)
     short_name = models.CharField(max_length=16, blank=True)
-    grams = models.IntegerField()
+    # grams = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -45,3 +46,13 @@ class RecipeIngredient(models.Model):
 
     def __str__(self):
         return f"{self.recipe}, {self.ingredient}, {self.quantity} {self.unit}"
+
+
+class UserIngredient(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    quantity = models.FloatField()
+
+    def __str__(self):
+        return f"{self.user}, {self.ingredient}, {self.quantity} {self.unit}"

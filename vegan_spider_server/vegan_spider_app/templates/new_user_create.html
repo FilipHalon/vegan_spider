@@ -1,0 +1,16 @@
+{% extends 'login.html' %}
+
+{% load static %}
+
+{% block title %}
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script src="{% static 'js/new_user_action.js' %}"></script>
+    <title>Tworzenie nowego użytkownika</title>
+{% endblock %}
+
+{% block button %}
+    <button type="submit">Utwórz</button>
+{% endblock %}
