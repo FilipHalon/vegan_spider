@@ -1,11 +1,26 @@
 $(function() {
 
+    /* to be added later:   <li>
+                                <input name="quantity" type="number">
+                            </li>
+                            <li>
+                                <select name="unit">
+                                    <option value="gram" selected>gram</option>
+                                    <option value="kilogram">kilogramów</option>
+                                    <option value="millilitre">mililitrów</option>
+                                    <option value="litre">litrów</option>
+                                    <option value="number">sztuk</option>
+                                </select>
+                            </li> */
+
+
     const $ajax = function(url, type="GET", data) {
         return $.ajax({
             url: url,
             type: type,
             data: data,
             dataType: "json",
+            headers: {'X-CSRFToken': window.CSRF_TOKEN}
         }).fail(
             function (xhr, status, error) {
                 console.error(error);
@@ -30,6 +45,49 @@ $(function() {
 
     // dataRequest('http://127.0.0.1:8000/user/current/')
     //     .then();
+
+    const addOwnIngredientRow = function(id, name, photo) {
+        return $(`<li class="ingredient instance box">
+                        <form class="own list form">
+                            <ul>
+                                <li class="hidden">
+                                    <input class="ingredient id" type="hidden" name="ingredient" value="${id}">
+                                </li>
+                                <li><img src="${photo}" alt="${name}"></li>
+                                <li>${name}</li>
+                                    <button class="ingredient delete">Usuń</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </li>`)
+    };
+
+    const $userIngredientList = $('.own.list.display');
+
+    $ajax('http://127.0.0.1:8000/user/current/', "GET")
+        .done(res => {
+            const userIngredients = res.ingredients;
+            for (let ing of userIngredients) {
+                $userIngredientList.append(addOwnIngredientRow(ing.id, ing.text, ing.photo))
+            }
+        });
+
+    // const $ownListForm = $(".own.list.form");
+
+    $userIngredientList.on("click", e => {
+        const $target = $(e.target);
+        if ($target.hasClass("delete")) {
+            e.preventDefault();
+            const $ownListSerialized = $target.closest(".own.list.form").serialize();
+            const ingredientId = $ownListSerialized.split('=')[1];
+            $ajax(`http://127.0.0.1:8000/user_ingredient_search/?${$ownListSerialized}`)
+                .done(res => {
+                    const idToDelete = res[0].id;
+                    $ajax(`http://127.0.0.1:8000/user_ingredients/${idToDelete}/`, "DELETE");
+                    $target.closest(".ingredient.instance.box").remove();
+            })
+        }
+    });
 
     const $select2Ingredients = $('#select2-ingredients');
 
@@ -56,19 +114,6 @@ $(function() {
                             </li>
                             <li><img src="${photo}" alt="${name}"></li>
                             <li>${name}</li>
-                            <li>
-                                <input name="quantity" type="number">
-                            </li>
-                            <li>
-                                <select name="unit">
-                                    <option value="gram" selected>gram</option>
-                                    <option value="kilogram">kilogramów</option>
-                                    <option value="millilitre">mililitrów</option>
-                                    <option value="litre">litrów</option>
-                                    <option value="number">sztuk</option>
-                                </select>
-                            </li>
-                            <li>
                                 <button class="ingredient delete">Usuń</button>
                             </li>
                         </ul>
@@ -130,6 +175,9 @@ $(function() {
                     }
                 });
             })
+        }
+        else if ($target.hasClass("own")) {
+            const $ingredientList = $ingredientListForm.serialize();
         }
     });
 });

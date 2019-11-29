@@ -21,10 +21,11 @@ from django.conf.urls.static import static
 from rest_framework import routers
 
 from vegan_spider_app.views import IngredientDetails, IndexPage, RecipeIngredients, UserLogin, RecipeDetails, \
-    UserActionView, NewUserCreate, UserProfilePage, UserIngredientView
+    UserActionView, NewUserCreate, UserProfilePage, UserIngredientView, UserIngredientViewSet
 
 router = routers.SimpleRouter()
 router.register(r'user', UserActionView)
+router.register(r'user_ingredients', UserIngredientViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,7 +38,8 @@ urlpatterns = [
     re_path(r'^recipe_ingredients/$', RecipeIngredients.as_view(), name="recipe-ingredients"),
     re_path(r'^recipe_details/$', RecipeDetails.as_view(), name="recipe-ingredients"),
     re_path(r'^user_profile/(?P<user_id>\d+)$', UserProfilePage.as_view(), name='user-profile'),
-    path('user_ingredients', UserIngredientView.as_view()),
+    # re_path(r'^user_ingredients', UserIngredientView.as_view()),
+    re_path(r'^user_ingredient_search', UserIngredientView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += router.urls

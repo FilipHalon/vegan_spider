@@ -6,8 +6,9 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import FormView
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters, viewsets
+from rest_framework import generics, filters, viewsets, status
 from rest_framework.decorators import action
+from rest_framework.mixins import DestroyModelMixin, ListModelMixin
 from rest_framework.response import Response
 
 from vegan_spider_app.forms import NewUserCreateForm
@@ -81,6 +82,38 @@ class UserActionView(viewsets.ModelViewSet):
 class UserIngredientView(generics.ListAPIView):
     queryset = UserIngredient.objects.all()
     serializer_class = UserIngredientSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['ingredient']
+
+    # def get_object(self):
+    #     queryset = self.queryset.filter(user=self.request.user)
+    #     if 'ingredient' in self.request.query_params:
+    #         queryset.filter(ingredient=self.request.query_params['ingredient'])
+    #     return queryset
+
+    def get_queryset(self):
+        queryset = self.queryset.filter(user=self.request.user)
+        return queryset
+
+    # def filter_queryset(self, queryset):
+    #     queryset = queryset.filter(user=self.request.user)
+    #     if 'ingredient' in self.request.query_params:
+    #         queryset.filter(ingredient=self.request.query_params['ingredient'])
+    #     return queryset
+    #
+    # def destroy(self, request, *args, **kwargs):
+    #     instance = self.filter_queryset(queryset=self.queryset)
+    #     self.perform_destroy(instance)
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserIngredientViewSet(viewsets.ModelViewSet):
+    queryset = UserIngredient.objects.all()
+    serializer_class = UserIngredientSerializer
+
+    def filter_queryset(self, queryset):
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
 
 
 class IngredientDetails(generics.ListAPIView):
