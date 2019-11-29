@@ -18,35 +18,52 @@
           href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
     <script src="{% static 'js/app.js' %}"></script>
-    <title>Witaj u wegańskiego pająka</title>
+    {% block title %}
+        <title>Witaj u wegańskiego pająka</title>
+    {% endblock %}
 </head>
 <body>
     <header>
         <nav class="navbar fixed-top">
-            <a class="navbar-brand" href="#">Wegański pająk</a>
+            <a class="navbar-brand" href="{% url 'index' %}">Wegański pająk</a>
             <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'new-user-create' %}">Zarejestruj się</a>
-                </li>
-{#                {% if user.is_authenticated %}#}
-{#                {% else %}#}
-                    <li class="nav-item">
+                {% if user.is_authenticated %}
+                    <li class="nav-item user-logged">
+                        <a class="nav-link" href="{% url 'user-profile' user_id=user.id %}">{{ user.username }}</a>
+                    </li>
+                    <li class="nav-item user-logged">
+                        <a class="nav-link" href="">Wyloguj się</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item user-not-logged">
+                        <a class="nav-link" href="{% url 'new-user-create' %}">Zarejestruj się</a>
+                    </li>
+                    <li class="nav-item user-not-logged">
                         <a class="nav-link" href="{% url 'login' %}">Zaloguj się</a>
                     </li>
-{#                {% endif %}#}
+                {% endif %}
             </ul>
         </nav>
     </header>
     <main>
-        <section class="container jumbotron jumbotron-fluid align-content-center">
-            <h1 class="display-4">Witaj u wegańskiego pająka</h1>
-            <p class="lead">Opowiedz, co masz w lodówce, a pająk zaplecie sieć pomysłów, co możesz przygotować z podnych produktów</p>
-        </section>
+        {% block introduction %}
+            <section class="container jumbotron jumbotron-fluid align-content-center">
+                <h1 class="display-4">Witaj u wegańskiego pająka</h1>
+                <p class="lead">Opowiedz, co masz w lodówce, a pająk zaplecie sieć pomysłów, co możesz przygotować z podanych produktów</p>
+            </section>
+        {% endblock %}
+        {% if user.is_authenticated %}
+            <section class="own list container">
+                <h2>Produkty, które posiadasz</h2>
+                <ul class="own list display">
+                </ul>
+            </section>
+        {% endif %}
         <section class="ingredient input container">
             <h2>Podaj produkty, które masz</h2>
                 <div id="ingredient-search-form">
                     <select id="select2-ingredients" class="js-example-basic-multiple" name="states[]" multiple="multiple"></select>
-                    <button class="ingredient add">Dodaj do listy</button>
+                    <button class="ingredient add">Wybierz</button>
                 </div>
         </section>
         <section class="ingredient list container">
@@ -55,13 +72,18 @@
                 <ul class="ingredient list display">
                 </ul>
                 <button class="ingredient recipe search">Szukaj</button>
+                {% if user.is_authenticated %}
+                    <button class="own add">Dodaj do listy swoich produktów</button>
+                {% endif %}
             </form>
         </section>
-        <section class="recipe list container">
-            <h2>Lista przepisów</h2>
-            <ul class="recipe list display">
-            </ul>
-        </section>
+        {% block recipe_list %}
+            <section class="recipe list container">
+                <h2>Lista przepisów</h2>
+                <ul class="recipe list display">
+                </ul>
+            </section>
+        {% endblock %}
     </main>
 </body>
 </html>

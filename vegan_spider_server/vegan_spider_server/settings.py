@@ -144,3 +144,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Miscellaneous
 
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'vegan_spider_app.User'

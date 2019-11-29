@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.db.models import Count, Sum, Case, When, Q, CharField
 from django.shortcuts import render, get_object_or_404
@@ -11,9 +11,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from vegan_spider_app.forms import NewUserCreateForm
-from vegan_spider_app.models import Ingredient, RecipeIngredient, Recipe
+from vegan_spider_app.models import Ingredient, RecipeIngredient, Recipe, UserIngredient, User
 from vegan_spider_app.serializers import IngredientDetailSerializer, RecipeIngredientSerializer, RecipeDetailSerializer, \
-    UserSerializer
+    UserSerializer, UserIngredientSerializer
 
 
 # Create your views here.
@@ -22,6 +22,12 @@ class IndexPage(View):
 
     def get(self, request):
         return render(request, 'index.html')
+
+
+class UserProfilePage(View):
+
+    def get(self, request, user_id):
+        return render(request, 'user_profile.html')
 
 
 class UserLogin(LoginView):
@@ -53,7 +59,6 @@ class NewUserCreate(View):
 
 
 class UserActionView(viewsets.ModelViewSet):
-
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -61,6 +66,21 @@ class UserActionView(viewsets.ModelViewSet):
     def current(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
+
+    # @action(detail=True, methods=['get'])
+    # def profile(self, request, pk):
+    #     serializer = UserProfileSerializer
+    #     return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def ingredients(self, request, pk):
+        serializer = UserIngredientSerializer
+        return Response(serializer.data)
+
+
+class UserIngredientView(generics.ListAPIView):
+    queryset = UserIngredient.objects.all()
+    serializer_class = UserIngredientSerializer
 
 
 class IngredientDetails(generics.ListAPIView):

@@ -1,13 +1,44 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from vegan_spider_app.models import Ingredient, RecipeIngredient, Recipe
+from vegan_spider_app.models import Ingredient, RecipeIngredient, Recipe, UserIngredient
+
+
+# class UserProfileSerializer(serializers.ModelSerializer):
+#     # user = UserSerializer()
+#     # ingredients = IngredientDetailSerializer(
+#     #     many=True
+#     # )
+#     # id = serializers.IntegerField(source="user")
+#
+#     class Meta:
+#         model = UserProfile
+#         # fields = ('user', 'ingredients', 'photo')
+#         # fields = ('id', 'photo')
+#         fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
+    # # photo = serializers.HyperlinkedRelatedField(
+    # #     view_name='user-photo',
+    # #     queryset=UserProfile.objects.all(),
+    # #     lookup_url_kwarg={'user: user.pk'}
+    # # )
+    # ingredients = serializers.HyperlinkedRelatedField(
+    #     view_name='user-ingredient',
+    #     queryset=UserIngredient.objects.all(),
+    #     # lookup_url_kwarg={'user: user.pk'}
+    # )
 
     class Meta:
         model = User
+        fields = '__all__'
+
+
+class UserIngredientSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserIngredient
         fields = '__all__'
 
 
@@ -27,7 +58,9 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeDetailSerializer(serializers.ModelSerializer):
-    ingredients = IngredientDetailSerializer(many=True)
+    ingredients = IngredientDetailSerializer(
+        many=True
+    )
     ingredients_count = serializers.IntegerField(
         read_only=True
     )

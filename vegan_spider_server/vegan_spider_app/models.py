@@ -1,11 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class User(AbstractUser):
     photo = models.ImageField(blank=True, upload_to='profile_photos')
     ingredients = models.ManyToManyField('Ingredient', through="UserIngredient")
 
@@ -49,7 +49,7 @@ class RecipeIngredient(models.Model):
 
 
 class UserIngredient(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     quantity = models.FloatField()

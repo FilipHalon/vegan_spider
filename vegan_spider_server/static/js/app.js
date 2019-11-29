@@ -1,17 +1,35 @@
 $(function() {
 
-    const $ajax = function(url, type, data) {
+    const $ajax = function(url, type="GET", data) {
         return $.ajax({
             url: url,
             type: type,
             data: data,
-            dataType: "json"
+            dataType: "json",
         }).fail(
             function (xhr, status, error) {
                 console.error(error);
             }
         )
     };
+
+    const dataRequest = async (url) => {
+        try {
+            const res = await fetch(url);
+            if (res.ok) {
+                const jsonRes = await res.json();
+                // console.log(jsonRes);
+                // return jsonRes
+            }
+            throw Error("The data could not be collected")
+        }
+        catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    // dataRequest('http://127.0.0.1:8000/user/current/')
+    //     .then();
 
     const $select2Ingredients = $('#select2-ingredients');
 

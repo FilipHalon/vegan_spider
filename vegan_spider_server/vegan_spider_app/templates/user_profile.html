@@ -1,52 +1,13 @@
-<!DOCTYPE html>
-<html lang="pl-Pl">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=IM+Fell+English|Markazi+Text:400,700&display=swap&subset=latin-ext">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"></script>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-    <script src="{% static 'js/app.js' %}"></script>
-    <title>Witaj u wegańskiego pająka</title>
+{% extends 'index.html' %}
+
+{% block title %}
     <title>Profil użytkownika</title>
-</head>
-<body>
-    <header>
-        <nav class="navbar fixed-top">
-            <a class="navbar-brand" href="#">Wegański pająk - strona główna</a>
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'new-user-create' %}">Zarejestruj się</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Zaloguj się</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="detail list">
+{% endblock %}
 
-        </section>
-        <section class="ingredient input container">
-            <h2>Dodaj produkty, które masz</h2>
-                <div id="ingredient-search-form">
-                    <select id="select2-ingredients" class="js-example-basic-multiple" name="states[]" multiple="multiple"></select>
-                    <button class="ingredient add">Dodaj do listy</button>
-                </div>
-        </section>
-        <section class="ingredient list">
+{% block introduction %}
 
-        </section>
-    </main>
-</body>
-</html>
+{% endblock %}
+
+{% block recipe_list %}
+
+{% endblock %}
