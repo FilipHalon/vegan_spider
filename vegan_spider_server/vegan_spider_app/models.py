@@ -41,8 +41,8 @@ class Unit(models.Model):
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
-    quantity = models.FloatField()
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, blank=True)
+    quantity = models.FloatField(blank=True)
 
     def __str__(self):
         return f"{self.recipe}, {self.ingredient}, {self.quantity} {self.unit}"
@@ -51,8 +51,8 @@ class RecipeIngredient(models.Model):
 class UserIngredient(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
-    quantity = models.FloatField()
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, blank=True)
+    quantity = models.FloatField(blank=True)
 
     def __str__(self):
         return f"{self.user}, {self.ingredient}, {self.quantity} {self.unit}"

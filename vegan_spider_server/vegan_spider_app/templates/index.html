@@ -72,7 +72,9 @@
             <form class="ingredient list form">
                 <ul class="ingredient list display">
                 </ul>
-                <button class="ingredient recipe search">Szukaj</button>
+                {% block recipe_search_button %}
+                    <button class="ingredient recipe search">Szukaj</button>
+                {% endblock %}
                 {% if user.is_authenticated %}
                     <button class="own add">Dodaj do listy swoich produktów</button>
                 {% endif %}

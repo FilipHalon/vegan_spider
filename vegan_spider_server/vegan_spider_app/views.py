@@ -47,16 +47,16 @@ class UserLogin(LoginView):
 #         return super().form_valid(form)
 
 
-# class NewUserCreate(FormView):
-#     template_name = 'new_user_create.html'
-#     form_class = UserCreationForm
-#     success_url = '/'
+class NewUserCreate(FormView):
+    template_name = 'new_user_create.html'
+    form_class = UserCreationForm
+    success_url = '/'
 
-class NewUserCreate(View):
-
-    def get(self, request):
-        form = NewUserCreateForm
-        return render(request, 'new_user_create.html', {'form': form})
+# class NewUserCreate(View):
+#
+#     def get(self, request):
+#         form = NewUserCreateForm
+#         return render(request, 'new_user_create.html', {'form': form})
 
 
 class UserActionView(viewsets.ModelViewSet):
@@ -114,6 +114,20 @@ class UserIngredientViewSet(viewsets.ModelViewSet):
     def filter_queryset(self, queryset):
         queryset = queryset.filter(user=self.request.user)
         return queryset
+
+    # def create(self, request, *args, **kwargs):
+    #     ingredients = self.kwargs['ingredients']
+    #     for ingr in ingredients:
+    #         UserIngredient.objects.update_or_create(
+    #             ingredient=ingr,
+    #             user=request.user
+    #         )
+    #
+    #         serializer = self.get_serializer(data=request.data)
+    #         serializer.is_valid(raise_exception=True)
+    #         self.perform_create(serializer)
+    #         headers = self.get_success_headers(serializer.data)
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class IngredientDetails(generics.ListAPIView):

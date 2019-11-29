@@ -5,9 +5,37 @@
 {% endblock %}
 
 {% block introduction %}
-
+    <section class="user profile data container">
+        <form action="">
+            <ul>
+                <li class="hidden"></li>
+                <li>
+                    <div class="user photo">
+                    </div>
+                </li>
+                <li>
+                    <span>Użytkownik</span>
+                    <span class="username"></span>
+                </li>
+                <li>
+                    <span>Adres e-mail</span>
+                    <span class="user e-mail"></span>
+                </li>
+                <li>
+                    <span>Imię</span>
+                    <span class="user first_name"></span>
+                </li>
+                <li>
+                    <span>Nazwisko</span>
+                    <span class="user last_name"></span>
+                </li>
+            </ul>
+            <button class="user data change" type="submit">Zmień dane</button>
+        </form>
+    </section>
 {% endblock %}
-
+{% block recipe_search_button %}
+{% endblock %}
 {% block recipe_list %}
 
 {% endblock %}

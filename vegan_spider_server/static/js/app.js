@@ -46,6 +46,8 @@ $(function() {
     // dataRequest('http://127.0.0.1:8000/user/current/')
     //     .then();
 
+        // user profile
+
     const addOwnIngredientRow = function(id, name, photo) {
         return $(`<li class="ingredient instance box">
                         <form class="own list form">
@@ -62,17 +64,27 @@ $(function() {
                     </li>`)
     };
 
+    const $userPhoto = $('.user.photo');
+    const $username = $('.username');
+    const $userEmail = $('.user.e-mail');
+    const $userFirstName = $('.user.first_name');
+    const $userLastName = $('.user.last_name');
     const $userIngredientList = $('.own.list.display');
 
-    $ajax('http://127.0.0.1:8000/user/current/', "GET")
+    $ajax('http://127.0.0.1:8000/user/current/')
         .done(res => {
+
+            $userPhoto.html(`<img src="${res.photo}" alt="Zdjęcie profilowe">`);
+            $username.text(res.username);
+            $userEmail.text(res.email);
+            $userFirstName.text(res.first_name);
+            $userLastName.text(res.last_name);
+
             const userIngredients = res.ingredients;
             for (let ing of userIngredients) {
                 $userIngredientList.append(addOwnIngredientRow(ing.id, ing.text, ing.photo))
             }
         });
-
-    // const $ownListForm = $(".own.list.form");
 
     $userIngredientList.on("click", e => {
         const $target = $(e.target);
@@ -178,6 +190,18 @@ $(function() {
         }
         else if ($target.hasClass("own")) {
             const $ingredientList = $ingredientListForm.serialize();
+            $ajax('http://127.0.0.1:8000/user_ingredients/', "GET", $ingredientList)
+                .done(res => {
+                    const ids = [];
+                    for (let obj in res) {
+                        ids.push(obj.id)
+                    }
+                    console.log(res);
+                //     $ajax('http://127.0.0.1:8000/user_ingredients/', 'POST', $ingredientList)
+                //         .done(() => {
+                //             $userIngredientList
+                // })
+            })
         }
     });
 });
