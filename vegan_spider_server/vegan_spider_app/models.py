@@ -41,8 +41,8 @@ class Unit(models.Model):
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, blank=True)
-    quantity = models.FloatField(blank=True)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, blank=True, null=True)
+    quantity = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.recipe}, {self.ingredient}, {self.quantity} {self.unit}"

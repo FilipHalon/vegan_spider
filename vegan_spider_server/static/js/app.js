@@ -157,9 +157,10 @@ $(function() {
             $ajax(`http://127.0.0.1:8000/user_ingredient_search/?${$ownListSerialized}`)
                 .done(res => {
                     const idToDelete = res[0].id;
+                    const ingredientID = `${res[0].ingredient}`;
                     $ajax(`http://127.0.0.1:8000/user_ingredients/${idToDelete}/`, "DELETE");
                     $target.closest(".ingredient.instance.box").remove();
-                    displayedIngredients.splice(displayedIngredients.indexOf(idToDelete), 1);
+                    displayedIngredients.splice(displayedIngredients.indexOf(ingredientID), 1);
                     console.log(displayedIngredients);
             })
         }
@@ -275,7 +276,7 @@ $(function() {
                 resp.forEach(recipe => {
                     const ingredientsIncluded = recipe.ingredients_included ? recipe.ingredients_included : 0;
                     const match = Math.round(parseFloat(ingredientsIncluded)/parseFloat(recipe.ingredients_count)*100)/100;
-                    $recipeDisplayList.append($recipeDisplayRow(recipe.id, recipe.name, recipe.photo, recipe.desc, recipe.url, match));
+                    $recipeDisplayList.append($recipeDisplayRow(recipe.id, recipe.name, recipe.photo, recipe.desc, recipe.link, match));
                     const $ingredientDisplayList = $(`.recipe.${recipe.id}.ingredient.list.display`);
                     for (let ingredient of recipe.ingredients) {
                         $ingredientDisplayList.append($(`<li>${ingredient.text}</li>`))
