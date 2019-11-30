@@ -198,5 +198,5 @@ class RecipeDetails(generics.ListAPIView):
                 ingredients_included=Count(
                     'recipeingredient__ingredient', distinct=True
                 )
-            ).order_by()
+            ).order_by('ingredients_included')
         return queryset

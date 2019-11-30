@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=IM+Fell+English|Markazi+Text:400,700&display=swap&subset=latin-ext">
+          href="https://fonts.googleapis.com/css?family=Jaldi:400,700&display=swap&subset=latin-ext">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
@@ -64,7 +64,7 @@
             <h2>Podaj produkty, które masz</h2>
                 <div id="ingredient-search-form">
                     <select id="select2-ingredients" class="js-example-basic-multiple" name="states[]" multiple="multiple"></select>
-                    <button class="ingredient add">Wybierz</button>
+                    <button class="ingredient add btn btn-outline-secondary">Wybierz</button>
                 </div>
         </section>
         <section class="ingredient list container">
@@ -73,15 +73,15 @@
                 <ul class="ingredient list display">
                 </ul>
                 {% block recipe_search_button %}
-                    <button class="ingredient recipe search">Szukaj</button>
+                    <button class="ingredient recipe search btn btn-outline-secondary">Szukaj</button>
                 {% endblock %}
                 {% if user.is_authenticated %}
-                    <button class="own add">Dodaj do listy swoich produktów</button>
+                    <button class="own add btn btn-outline-secondary">Dodaj do listy swoich produktów</button>
                 {% endif %}
             </form>
         </section>
         {% block recipe_list %}
-            <section class="recipe list container">
+            <section class="recipe list container hidden">
                 <h2>Lista przepisów</h2>
                 <ul class="recipe list display">
                 </ul>

@@ -56,13 +56,18 @@ $(function() {
         return $(`<li class="ingredient instance box">
                         <form class="own list form">
                             <ul>
-                                <li class="hidden">
-                                    <input class="ingredient id" type="hidden" name="ingredient" value="${id}">
-                                </li>
-                                <li><img src="${photo}" alt="${name}"></li>
-                                <li>${name}</li>
-                                    <button class="ingredient delete">Usuń</button>
-                                </li>
+                                <div>
+                                    <li class="hidden">
+                                        <input class="ingredient id" type="hidden" name="ingredient" value="${id}">
+                                    </li>
+                                    <li><img src="${photo}" alt="${name}"></li>
+                                    <li>${name}</li>
+                                </div>
+                                <div>
+                                    <li>
+                                        <button class="ingredient delete btn btn-outline-secondary">Usuń</button>
+                                    </li>
+                                </div>
                             </ul>
                         </form>
                     </li>`)
@@ -184,13 +189,18 @@ $(function() {
     const addNewIngredientRow = function(id, name, photo) {
         return $(`<li class="ingredient instance box">
                         <ul>
-                            <li class="hidden">
-                                <input class="ingredient id" type="hidden" name="ingredients" value="${id}">
-                            </li>
-                            <li><img src="${photo}" alt="${name}"></li>
-                            <li>${name}</li>
-                                <button class="ingredient delete">Usuń</button>
-                            </li>
+                            <div>
+                                <li class="hidden">
+                                    <input class="ingredient id" type="hidden" name="ingredients" value="${id}">
+                                </li>
+                                <li><img src="${photo}" alt="${name}"></li>
+                                <li>${name}</li>
+                            </div>
+                            <div>
+                                <li>
+                                    <button class="ingredient delete btn btn-outline-secondary">Usuń</button>
+                                </li>
+                            </div>
                         </ul>
                     </li>`)
     };
@@ -212,21 +222,30 @@ $(function() {
     // Recipe search / user ingredient list update
 
     const $recipeDisplayRow = function (id, name, photo, desc, url, match) {
-        return $(`<li>
-                    <ul>
-                        <li><img src="${photo}" alt="${name}"></li>
-                        <li><a href="${url}">${name}</a></li>
-                        <li>${desc}</li>
-                        <li><a href="${url}">Przejdź do strony</a></li>
-                        <li>
-                            <ul class="recipe ${id} ingredient list display"></ul>
-                        </li>
-                        <li>Dopasowanie: ${match}</li>
+        return $(`<li class="recipe instance box">
+                    <ul class="row">
+                        <div class="col-3">
+                            <li><img src="${photo}" alt="${name}"></li>
+                            <li><a href="${url}">${name}</a></li>
+                        </div>
+                        <div class="col-3">
+                            <li>${desc}</li>
+                            <li><a href="${url}">Przejdź do strony</a></li>
+                        </div>
+                        <div class="col-2">
+                            <li>
+                                <ul class="recipe ${id} ingredient list display"></ul>
+                            </li>
+                        </div>
+                        <div class="col-2">
+                            <li>Dopasowanie: ${match}</li>
+                        </div>
                     </ul>
                 </li>`)
     };
 
     const $ingredientListForm = $(".ingredient.list.form");
+    const $recipeSection = $("section.recipe.list");
     const $recipeDisplayList = $(".recipe.list.display");
 
     $ingredientListForm.on("click", (e) => {
@@ -242,6 +261,7 @@ $(function() {
             ingredientBox.remove();
         }
         else if ($target.hasClass("search")) {
+            $recipeSection.removeClass("hidden");
             // const $ingredientList = $ingredientListForm.serialize();
             let ingredientList = '';
             displayedIngredients.forEach((ingr, i) => {

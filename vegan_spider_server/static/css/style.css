@@ -1,28 +1,154 @@
 body {
-    margin-top: 58px;
-    font-family: 'Markazi Text', serif;
+    margin-top: 57px;
+    font-family: 'Jaldi', sans-serif;
     color: hsl(69, 44%, 47%);
 }
 
 header {
-    font-family: 'IM Fell English', serif;
+    text-transform: uppercase;
 }
 
 nav {
     border-bottom: solid hsl(69, 44%, 47%) 1px;
+    background-image: url("../img/romanesco-3493007_1920.jpg");
 }
 
 nav a {
-    color: hsl(69, 44%, 47%);
+    color: hsl(42, 33%, 32%);
+}
+
+main {
+    color: hsl(42, 33%, 32%);
+}
+
+section {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+section:last-of-type {
+    margin-bottom: 4rem;
+}
+
+.jumbotron {
+    min-height: 21rem;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*background-image: url("../img/plant-690051_1280.jpg");*/
+}
+
+h2 {
+    text-transform: uppercase;
+    color: hsl(41, 72%, 46%);
 }
 
 #ingredient-search-form {
     width: 100%;
+    margin: 1em auto;
 }
 
 #select2-ingredients {
     width: 100%;
 }
+
+button {
+    margin: .1em;
+}
+
+/* user profile */
+
+/*.profile-data ul {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*.profile-data ul li div {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*}*/
+
+/* ingredient/recipe lists */
+
+.display {
+    padding-left: 0;
+    border-radius: 10%;
+    display: flex;
+    flex-direction: row;
+}
+
+.recipe.display {
+    padding-left: 0;
+    border-radius: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.instance.box {
+    display: flex;
+    flex-direction: row;
+    margin: .6em;
+    flex-wrap: wrap;
+}
+
+.ingredient.instance.box ul {
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+    align-items: center;
+}
+
+.recipe.instance.box ul {
+    width: 100%;
+    padding-left: 0;
+}
+
+.instance.box ul div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recipe.instance.box ul div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.recipe.instance.box ul div:nth-of-type(1) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.instance.box ul div li {
+    display: flex;
+    flex-direction: row;
+    text-transform: uppercase;
+}
+
+.instance.box ul li img {
+    height: 4.5em;
+    width: 4.5em;
+    border-radius: 100%;
+}
+
+.instance.box ul li button {
+    padding-top: .1em;
+    padding-bottom: .1em;
+}
+
+.instance.box ul li {
+    display: flex;
+    flex-direction: row;
+    text-transform: uppercase;
+}
+
+/* hidden elements */
 
 .hidden {
     display: none;

@@ -9,29 +9,37 @@
         <form class="profile-data form">
             <ul>
                 <li class="hidden"></li>
-                <li>
-                    <div class="profile photo">
+                <li class="row">
+                    <div class="profile photo col-3">
                     </div>
                 </li>
-                <li>
-                    <span>Użytkownik</span>
-                    <span class="profile username"></span>
+                <li class="row">
+                    <div>
+                        <div class="col-3">Użytkownik</div>
+                        <div class="profile username col-3"></div>
+                    </div>
                 </li>
-                <li>
-                    <span>Adres e-mail</span>
-                    <span class="profile e-mail input" id="email"></span>
+                <li class="row">
+                    <div>
+                        <div class="col-3">Adres e-mail</div>
+                        <div class="profile e-mail input col-3" id="email"></div>
+                    </div>
                 </li>
-                <li>
-                    <span>Imię</span>
-                    <span class="profile first_name input" id="first_name"></span>
+                <li class="row">
+                    <div>
+                        <div class="col-3">Imię</div>
+                        <div class="profile first_name input col-3" id="first_name"></div>
+                    </div>
                 </li>
-                <li>
-                    <span>Nazwisko</span>
-                    <span class="profile last_name input" id="last_name"></span>
+                <li class="row">
+                    <div>
+                        <div class="col-3">Nazwisko</div>
+                        <div class="profile last_name input col-3" id="last_name"></div>
+                    </div>
                 </li>
             </ul>
-            <button class="profile-data edit save" type="submit">Zmień dane</button>
-            <button class="profile-data cancel hidden">Anuluj</button>
+            <button class="profile-data edit save btn btn-outline-secondary" type="submit">Zmień dane</button>
+            <button class="profile-data cancel hidden btn btn-outline-secondary">Anuluj</button>
         </form>
     </section>
 {% endblock %}
