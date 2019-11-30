@@ -46,7 +46,11 @@ $(function() {
     // dataRequest('http://127.0.0.1:8000/user/current/')
     //     .then();
 
-    // user profile
+    /* User Profile Section */
+
+    // Upload user data on page loading
+
+    const displayedIngredients = [];
 
     const addOwnIngredientRow = function(id, name, photo) {
         return $(`<li class="ingredient instance box">
@@ -82,9 +86,13 @@ $(function() {
 
             const userIngredients = res.ingredients;
             for (let ing of userIngredients) {
-                $userIngredientList.append(addOwnIngredientRow(ing.id, ing.text, ing.photo))
+                $userIngredientList.append(addOwnIngredientRow(ing.id, ing.text, ing.photo));
+                displayedIngredients.push(`${ing.id}`);
+                console.log(displayedIngredients);
             }
         });
+
+    // Change user data on demand
 
     const profileDataForm = $('.profile-data.form');
     const profileDataChangeBtn = $('.profile-data.edit');
@@ -133,6 +141,8 @@ $(function() {
         }
     });
 
+    // User's ingredient list item delete on demand
+
     $userIngredientList.on("click", e => {
         const $target = $(e.target);
         if ($target.hasClass("delete")) {
@@ -144,9 +154,13 @@ $(function() {
                     const idToDelete = res[0].id;
                     $ajax(`http://127.0.0.1:8000/user_ingredients/${idToDelete}/`, "DELETE");
                     $target.closest(".ingredient.instance.box").remove();
+                    displayedIngredients.splice(displayedIngredients.indexOf(idToDelete), 1);
+                    console.log(displayedIngredients);
             })
         }
     });
+
+    // Ingredient select
 
     const $select2Ingredients = $('#select2-ingredients');
 
@@ -165,6 +179,8 @@ $(function() {
         }
     });
 
+    // Ingredient add on the current list
+
     const addNewIngredientRow = function(id, name, photo) {
         return $(`<li class="ingredient instance box">
                         <ul>
@@ -179,7 +195,6 @@ $(function() {
                     </li>`)
     };
 
-    const displayedIngredients = [];
     const $ingredientListDisplay = $(".ingredient.list.display");
 
     $('.ingredient.add').on("click", () => {
@@ -188,10 +203,13 @@ $(function() {
         for (let ing of choices) {
             if (!displayedIngredients.includes(ing.id)) {
                 displayedIngredients.push(ing.id);
+                console.log(displayedIngredients);
                 $ingredientListDisplay.append(addNewIngredientRow(ing.id, ing.text, ing.photo))
             }
         }
     });
+
+    // Recipe search / user ingredient list update
 
     const $recipeDisplayRow = function (id, name, photo, desc, url, match) {
         return $(`<li>
@@ -219,6 +237,7 @@ $(function() {
             const ingredientId = ingredientBox.find('.ingredient.id').val();
             if (displayedIngredients.includes(ingredientId)) {
                 displayedIngredients.splice(displayedIngredients.indexOf(ingredientId), 1);
+                console.log(displayedIngredients);
             }
             ingredientBox.remove();
         }
@@ -237,12 +256,8 @@ $(function() {
         }
         else if ($target.hasClass("own")) {
             const $ingredientList = $ingredientListForm.serialize();
-            $ajax('http://127.0.0.1:8000/user_ingredients/', "GET", $ingredientList)
+            $ajax('http://127.0.0.1:8000/user_ingredients/', "POST", $ingredientList)
                 .done(res => {
-                    const ids = [];
-                    for (let obj in res) {
-                        ids.push(obj.id)
-                    }
                     console.log(res);
                 //     $ajax('http://127.0.0.1:8000/user_ingredients/', 'POST', $ingredientList)
                 //         .done(() => {
