@@ -33,7 +33,7 @@
                         <a class="nav-link" href="{% url 'user-profile' user_id=user.id %}">{{ user.username }}</a>
                     </li>
                     <li class="nav-item user-logged">
-                        <a class="nav-link" href="">Wyloguj się</a>
+                        <a class="nav-link" href="{% url 'user_logout' %}">Wyloguj się</a>
                     </li>
                 {% else %}
                     <li class="nav-item user-not-logged">

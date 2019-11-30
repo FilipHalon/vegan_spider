@@ -1,9 +1,11 @@
+from django.contrib.auth import logout
 from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Count, Sum, Case, When, Q, CharField
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views import View
 from django.views.generic import FormView
 from django_filters.rest_framework import DjangoFilterBackend
@@ -26,6 +28,7 @@ class IndexPage(View):
         return render(request, 'index.html')
 
     def post(self, request):
+
         queried_ingredients = request.POST.getlist('ingredients')
         for ingr in queried_ingredients:
             ingr = Ingredient.objects.get(pk=ingr)
@@ -56,6 +59,13 @@ class UserLogin(LoginView):
 #                             email=form.cleaned_data['email'],
 #                             password=User.set_password(form.cleaned_data['password']))
 #         return super().form_valid(form)
+
+
+class UserLogout(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('index'))
 
 
 class NewUserCreate(FormView):
