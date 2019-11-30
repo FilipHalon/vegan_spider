@@ -152,7 +152,35 @@ button {
 
 /* auth forms */
 
+.auth-form.outer-container {
+    height: 100%;
+    width: 100%;
+}
 
+.auth-form.inner-container {
+    margin: auto;
+}
+
+.auth-form {
+    text-transform: uppercase;
+    color: hsl(42, 33%, 32%);
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form label {
+    padding-top: 1rem;
+}
+
+.auth-form button {
+    margin-top: 1rem;
+    width: 50%;
+}
+
+.auth-form .helptext {
+    font-size: 0.8rem;
+}
 
 /* hidden elements */
 

@@ -5,7 +5,7 @@ from vegan_spider_app.models import User
 
 
 class NewUserCreateForm(forms.ModelForm):
-    password_confirm = forms.CharField(max_length=128, widget=forms.PasswordInput)
+    password_confirm = forms.CharField(max_length=128, widget=forms.PasswordInput, label="Potwierdź hasło")
 
     class Meta:
         model = User
