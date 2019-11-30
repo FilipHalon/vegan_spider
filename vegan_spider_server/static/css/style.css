@@ -60,15 +60,17 @@ button {
 
 /* user profile */
 
-/*.profile-data ul {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*}*/
+.profile-data form {
+    padding: 2rem;
+}
 
-/*.profile-data ul li div {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*}*/
+.profile-data div {
+    font-size: 1.5rem;
+}
+
+.profile-data .key {
+    text-transform: uppercase;
+}
 
 /* ingredient/recipe lists */
 
@@ -147,6 +149,10 @@ button {
     flex-direction: row;
     text-transform: uppercase;
 }
+
+/* auth forms */
+
+
 
 /* hidden elements */
 

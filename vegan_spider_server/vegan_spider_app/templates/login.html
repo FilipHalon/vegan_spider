@@ -1,18 +1,29 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pl-PL">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Jaldi:400,700&display=swap&subset=latin-ext">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
     {% block title %}
         <title>Logowanie</title>
     {% endblock %}
 </head>
 <body>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_ul }}
-        {% block button %}
-            <button type="submit">Zaloguj się</button>
-        {% endblock %}
-    </form>
+    <div class="auth-form outer-container">
+        <div class="auth-form inner-container">
+            <form method="POST" class="auth-form">
+                {% csrf_token %}
+                {{ form.as_ul }}
+                {% block button %}
+                    <button type="submit">Zaloguj się</button>
+                {% endblock %}
+            </form>
+        </div>
+    </div>
 </body>
 </html>

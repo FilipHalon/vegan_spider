@@ -83,7 +83,7 @@ $(function() {
     $ajax('http://127.0.0.1:8000/user/current/')
         .done(res => {
 
-            $profilePhoto.html(`<img src="${res.photo}" alt="Zdjęcie profilowe">`);
+            $profilePhoto.html(`<img src="${res.photo}" alt="">`);
             $profileUsername.text(res.username);
             $profileEmail.text(res.email);
             $profileFirstName.text(res.first_name);
@@ -225,7 +225,7 @@ $(function() {
         return $(`<li class="recipe instance box">
                     <ul class="row">
                         <div class="col-3">
-                            <li><img src="${photo}" alt="${name}"></li>
+                            <li><img src="${photo}" alt="${name}]"></li>
                             <li><a href="${url}">${name}</a></li>
                         </div>
                         <div class="col-3">
