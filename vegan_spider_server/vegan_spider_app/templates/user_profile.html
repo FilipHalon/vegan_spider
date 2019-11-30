@@ -5,32 +5,33 @@
 {% endblock %}
 
 {% block introduction %}
-    <section class="user profile data container">
-        <form action="">
+    <section class="profile-data container">
+        <form class="profile-data form">
             <ul>
                 <li class="hidden"></li>
                 <li>
-                    <div class="user photo">
+                    <div class="profile photo">
                     </div>
                 </li>
                 <li>
                     <span>Użytkownik</span>
-                    <span class="username"></span>
+                    <span class="profile username"></span>
                 </li>
                 <li>
                     <span>Adres e-mail</span>
-                    <span class="user e-mail"></span>
+                    <span class="profile e-mail input" id="email"></span>
                 </li>
                 <li>
                     <span>Imię</span>
-                    <span class="user first_name"></span>
+                    <span class="profile first_name input" id="first_name"></span>
                 </li>
                 <li>
                     <span>Nazwisko</span>
-                    <span class="user last_name"></span>
+                    <span class="profile last_name input" id="last_name"></span>
                 </li>
             </ul>
-            <button class="user data change" type="submit">Zmień dane</button>
+            <button class="profile-data edit save" type="submit">Zmień dane</button>
+            <button class="profile-data cancel hidden">Anuluj</button>
         </form>
     </section>
 {% endblock %}

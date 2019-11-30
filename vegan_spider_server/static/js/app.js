@@ -46,7 +46,7 @@ $(function() {
     // dataRequest('http://127.0.0.1:8000/user/current/')
     //     .then();
 
-        // user profile
+    // user profile
 
     const addOwnIngredientRow = function(id, name, photo) {
         return $(`<li class="ingredient instance box">
@@ -64,27 +64,74 @@ $(function() {
                     </li>`)
     };
 
-    const $userPhoto = $('.user.photo');
-    const $username = $('.username');
-    const $userEmail = $('.user.e-mail');
-    const $userFirstName = $('.user.first_name');
-    const $userLastName = $('.user.last_name');
+    const $profilePhoto = $('.profile.photo');
+    const $profileUsername = $('.profile.username');
+    const $profileEmail = $('.profile.e-mail');
+    const $profileFirstName = $('.profile.first_name');
+    const $profileLastName = $('.profile.last_name');
     const $userIngredientList = $('.own.list.display');
 
     $ajax('http://127.0.0.1:8000/user/current/')
         .done(res => {
 
-            $userPhoto.html(`<img src="${res.photo}" alt="Zdjęcie profilowe">`);
-            $username.text(res.username);
-            $userEmail.text(res.email);
-            $userFirstName.text(res.first_name);
-            $userLastName.text(res.last_name);
+            $profilePhoto.html(`<img src="${res.photo}" alt="Zdjęcie profilowe">`);
+            $profileUsername.text(res.username);
+            $profileEmail.text(res.email);
+            $profileFirstName.text(res.first_name);
+            $profileLastName.text(res.last_name);
 
             const userIngredients = res.ingredients;
             for (let ing of userIngredients) {
                 $userIngredientList.append(addOwnIngredientRow(ing.id, ing.text, ing.photo))
             }
         });
+
+    const profileDataForm = $('.profile-data.form');
+    const profileDataChangeBtn = $('.profile-data.edit');
+    const profileDataChangeCancelBtn = $('.profile-data.cancel');
+    const userDataInputs = $('.profile.input');
+
+    profileDataForm.on("click", e => {
+        e.preventDefault();
+        const $target = $(e.target);
+        if ($target.hasClass("edit") || $target.hasClass("cancel")) {
+            profileDataChangeBtn.toggleClass("save");
+            profileDataChangeBtn.toggleClass("change");
+            profileDataChangeCancelBtn.toggleClass("hidden");
+            if (profileDataChangeBtn.hasClass("change")) {
+                profileDataChangeBtn.text("Zmień dane");
+            }
+            else if (profileDataChangeBtn.hasClass("save")) {
+                $target.text("Zatwierdź");
+            }
+            if ($target.hasClass("change")) {
+                userDataInputs.each((i, input) => {
+                input.innerHTML = `<input name="${input.id}" value=${input.innerText}>`
+                })
+            }
+            else if ($target.hasClass("save")) {
+                $ajax('http://127.0.0.1:8000/user/current/')
+                    .done(res => {
+                        const userId = res.id;
+                        const detailsChanged = profileDataForm.serialize();
+                        $ajax(`http://127.0.0.1:8000/user/${userId}/`, 'PATCH', detailsChanged)
+                            .done(res => {
+                                $profileEmail.text(res.email);
+                                $profileFirstName.text(res.first_name);
+                                $profileLastName.text(res.last_name);
+                        })
+                });
+            }
+            else if ($target.hasClass("cancel")) {
+                $ajax('http://127.0.0.1:8000/user/current/')
+                    .done(res => {
+                        $profileEmail.text(res.email);
+                        $profileFirstName.text(res.first_name);
+                        $profileLastName.text(res.last_name);
+                })
+            }
+        }
+    });
 
     $userIngredientList.on("click", e => {
         const $target = $(e.target);
