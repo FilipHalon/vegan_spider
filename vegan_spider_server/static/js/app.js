@@ -244,17 +244,17 @@ $(function() {
         else if ($target.hasClass("search")) {
             // const $ingredientList = $ingredientListForm.serialize();
             let ingredientList = '';
-            displayedIngredients.length === 0 ?
-                (ingredientList = 0) :
-                (displayedIngredients.forEach((ingr, i) => {
-                   ingredientList += `ingredients=${ingr}`;
-                   if (i < displayedIngredients.length-1) {
-                       ingredientList += '&';
-                   }
-                }));
+            displayedIngredients.forEach((ingr, i) => {
+               ingredientList += `ingredients=${ingr}`;
+               if (i < displayedIngredients.length-1) {
+                   ingredientList += '&';
+               }
+            });
+            $recipeDisplayList.children().remove();
             $ajax('http://127.0.0.1:8000/recipe_details/', 'GET', ingredientList).done(resp => {
                 resp.forEach(recipe => {
-                    const match = Math.round(parseFloat(recipe.ingredients_included)/parseFloat(recipe.ingredients_count)*100)/100;
+                    const ingredientsIncluded = recipe.ingredients_included ? recipe.ingredients_included : 0;
+                    const match = Math.round(parseFloat(ingredientsIncluded)/parseFloat(recipe.ingredients_count)*100)/100;
                     $recipeDisplayList.append($recipeDisplayRow(recipe.id, recipe.name, recipe.photo, recipe.desc, recipe.url, match));
                     const $ingredientDisplayList = $(`.recipe.${recipe.id}.ingredient.list.display`);
                     for (let ingredient of recipe.ingredients) {
