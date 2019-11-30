@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.db.models import Count, Sum, Case, When, Q, CharField
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import FormView
@@ -23,6 +24,16 @@ class IndexPage(View):
 
     def get(self, request):
         return render(request, 'index.html')
+
+    def post(self, request):
+        queried_ingredients = request.POST.getlist('ingredients')
+        for ingr in queried_ingredients:
+            ingr = Ingredient.objects.get(pk=ingr)
+            UserIngredient.objects.create(
+                ingredient=ingr,
+                user=request.user
+            )
+        return HttpResponse(status=204)
 
 
 class UserProfilePage(View):
@@ -73,10 +84,10 @@ class UserActionView(viewsets.ModelViewSet):
     #     serializer = UserProfileSerializer
     #     return Response(serializer.data)
 
-    @action(detail=True, methods=['get'])
-    def ingredients(self, request, pk):
-        serializer = UserIngredientSerializer
-        return Response(serializer.data)
+    # @action(detail=True, methods=['get'])
+    # def ingredients(self, request, pk):
+    #     serializer = UserIngredientSerializer
+    #     return Response(serializer.data)
 
 
 class UserIngredientView(generics.ListAPIView):
@@ -116,18 +127,19 @@ class UserIngredientViewSet(viewsets.ModelViewSet):
         return queryset
 
     # def create(self, request, *args, **kwargs):
-    #     ingredients = self.kwargs['ingredients']
-    #     for ingr in ingredients:
-    #         UserIngredient.objects.update_or_create(
+    #     queried_ingredients = self.request.query_params.getlist('ingredients')
+    #     for ingr in queried_ingredients:
+    #         UserIngredient.objects.create(
     #             ingredient=ingr,
     #             user=request.user
     #         )
-    #
-    #         serializer = self.get_serializer(data=request.data)
-    #         serializer.is_valid(raise_exception=True)
-    #         self.perform_create(serializer)
-    #         headers = self.get_success_headers(serializer.data)
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        # return Response(self.serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            #
+            # serializer = self.get_serializer(data=request.data)
+            # serializer.is_valid(raise_exception=True)
+            # self.perform_create(serializer)
+            # headers = self.get_success_headers(serializer.data)
+            # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class IngredientDetails(generics.ListAPIView):

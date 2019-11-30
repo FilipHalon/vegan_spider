@@ -242,8 +242,17 @@ $(function() {
             ingredientBox.remove();
         }
         else if ($target.hasClass("search")) {
-            const $ingredientList = $ingredientListForm.serialize();
-            $ajax('http://127.0.0.1:8000/recipe_details/', 'GET', $ingredientList).done(resp => {
+            // const $ingredientList = $ingredientListForm.serialize();
+            let ingredientList = '';
+            displayedIngredients.length === 0 ?
+                (ingredientList = 0) :
+                (displayedIngredients.forEach((ingr, i) => {
+                   ingredientList += `ingredients=${ingr}`;
+                   if (i < displayedIngredients.length-1) {
+                       ingredientList += '&';
+                   }
+                }));
+            $ajax('http://127.0.0.1:8000/recipe_details/', 'GET', ingredientList).done(resp => {
                 resp.forEach(recipe => {
                     const match = Math.round(parseFloat(recipe.ingredients_included)/parseFloat(recipe.ingredients_count)*100)/100;
                     $recipeDisplayList.append($recipeDisplayRow(recipe.id, recipe.name, recipe.photo, recipe.desc, recipe.url, match));
@@ -256,13 +265,17 @@ $(function() {
         }
         else if ($target.hasClass("own")) {
             const $ingredientList = $ingredientListForm.serialize();
-            $ajax('http://127.0.0.1:8000/user_ingredients/', "POST", $ingredientList)
-                .done(res => {
-                    console.log(res);
-                //     $ajax('http://127.0.0.1:8000/user_ingredients/', 'POST', $ingredientList)
-                //         .done(() => {
-                //             $userIngredientList
-                // })
+            $ajax('/', "POST", $ingredientList)
+                .done(() => {
+                    $ingredientListDisplay.children().remove();
+                    $ajax('http://127.0.0.1:8000/user/current/')
+                        .done(res => {
+                            $userIngredientList.children().remove();
+                            const userIngredients = res.ingredients;
+                            for (let ing of userIngredients) {
+                                $userIngredientList.append(addOwnIngredientRow(ing.id, ing.text, ing.photo));
+                    }
+                })
             })
         }
     });
