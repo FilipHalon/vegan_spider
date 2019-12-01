@@ -229,7 +229,7 @@ $(function() {
                             <li><img src="${photo}" alt="${name}]"></li>
                             <li><a href="${url}">${name}</a></li>
                         </div>
-                        <div class="col-3">
+                        <div class="col-5">
                             <li>${desc}</li>
                             <li><a href="${url}">Przejdź do strony</a></li>
                         </div>

@@ -124,7 +124,7 @@ class UserIngredientView(generics.ListAPIView):
     #     return queryset
 
     def get_queryset(self):
-        queryset = self.queryset.filter(user=self.request.user)
+        queryset = self.queryset.filter(user=self.request.user).order_by()
         return queryset
 
     # def filter_queryset(self, queryset):
